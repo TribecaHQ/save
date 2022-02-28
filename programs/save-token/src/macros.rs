@@ -1,6 +1,6 @@
 //! Macros
 
-/// Generates the signer seeds for a [crate::SAVE].
+/// Generates the signer seeds for a [crate::Save].
 #[macro_export]
 macro_rules! save_seeds {
     ($save: expr) => {

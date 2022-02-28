@@ -1,4 +1,4 @@
-//! Instruction handler for [crate::save_token::mint_to].
+//! Instruction handler for [save_token::mint_from_underlying].
 
 use crate::*;
 use anchor_spl::token::{Mint, TokenAccount};

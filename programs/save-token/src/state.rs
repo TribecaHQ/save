@@ -24,7 +24,7 @@ pub struct Save {
     pub yi_mint: Pubkey,
     /// The YiToken key.
     pub yi: Pubkey,
-    /// Token account holding the [Self::yi_mint] tokens of this [SAVE].
+    /// Token account holding the [Self::yi_mint] tokens of this [Save].
     pub yi_tokens: Pubkey,
     /// Locker.
     pub locker: Pubkey,
