@@ -1,6 +1,6 @@
 [package]
 name = "save-token"
-version = "0.1.0"
+version = "0.1.1"
 description = "SAVE Token: A Simple Agreement for Vote-Escrowed Tokens."
 edition = "2021"
 homepage = "https://tribeca.so"
