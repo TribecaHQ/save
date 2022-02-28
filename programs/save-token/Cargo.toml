@@ -1,0 +1,32 @@
+[package]
+name = "save-token"
+version = "0.1.0"
+description = "SAVE Token: A Simple Agreement for Vote-Escrowed Tokens."
+edition = "2021"
+homepage = "https://tribeca.so"
+repository = "https://github.com/TribecaHQ/tribeca"
+authors = ["Tribeca Team <team@tribeca.so>"]
+license = "AGPL-3.0"
+keywords = ["solana", "anchor", "governance", "tribeca"]
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "save_token"
+path = "src/lib.rs"
+
+[features]
+no-entrypoint = []
+no-idl = []
+cpi = ["no-entrypoint"]
+default = []
+
+[dependencies]
+anchor-lang = "^0.22"
+anchor-spl = "^0.22"
+locked-voter = { version = "^0.5.1", features = ["cpi"] }
+num-traits = "0.2"
+vipers = "^2.0"
+yi = { version = "^0.3.0", features = ["cpi"] }
+
+[dev-dependencies]
+proptest = { version = "1.0" }
