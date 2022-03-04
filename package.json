@@ -30,16 +30,16 @@
     "cargo-readme": "cd programs/save-token/ && cargo readme > README.md && cd ../../ && rm -f README.md && cp programs/save-token/README.md README.md"
   },
   "devDependencies": {
-    "@gokiprotocol/client": "^0.7.0",
-    "@project-serum/anchor": "^0.22.0",
+    "@gokiprotocol/client": "^0.8.0",
+    "@project-serum/anchor": "^0.22.1",
     "@rushstack/eslint-patch": "^1.1.0",
-    "@saberhq/anchor-contrib": "^1.12.47",
-    "@saberhq/chai-solana": "^1.12.47",
-    "@saberhq/eslint-config": "^1.12.47",
-    "@saberhq/solana-contrib": "^1.12.47",
-    "@saberhq/token-utils": "^1.12.47",
-    "@saberhq/tsconfig": "^1.12.47",
-    "@solana/web3.js": "^1.35.1",
+    "@saberhq/anchor-contrib": "^1.12.48",
+    "@saberhq/chai-solana": "^1.12.48",
+    "@saberhq/eslint-config": "^1.12.48",
+    "@saberhq/solana-contrib": "^1.12.48",
+    "@saberhq/token-utils": "^1.12.48",
+    "@saberhq/tsconfig": "^1.12.48",
+    "@solana/web3.js": "^1.36.0",
     "@tribecahq/tribeca-sdk": "^0.5.2",
     "@types/bn.js": "^5.1.0",
     "@types/chai": "^4.3.0",
@@ -59,7 +59,7 @@
     "lodash": "^4.17.21",
     "mocha": "^9.2.1",
     "prettier": "^2.5.1",
-    "ts-node": "^10.5.0",
+    "ts-node": "^10.6.0",
     "typedoc": "^0.22.12",
     "typescript": "^4.5.5"
   },
@@ -91,5 +91,5 @@
     "tiny-invariant": "^1.2.0",
     "tslib": "^2.3.1"
   },
-  "packageManager": "yarn@3.1.1"
+  "packageManager": "yarn@3.2.0"
 }
