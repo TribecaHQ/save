@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { GokiSDK } from "@gokiprotocol/client";
 import { assertTXSuccess } from "@saberhq/chai-solana";
 import type { Token } from "@saberhq/token-utils";
