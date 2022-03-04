@@ -211,6 +211,13 @@ export class SAVEWrapper {
   }) {
     const [save] = await findSaveAddress(amount.token.mintAccount);
     const saveData = await this.program.account.save.fetch(save);
+    const lockerRaw = await this.provider.getAccountInfo(saveData.locker);
+    if (!lockerRaw) {
+      throw new Error(`locker not found at key ${saveData.locker.toString()}`);
+    }
+    const lockerData = TRIBECA_CODERS.LockedVoter.accountParsers.locker(
+      lockerRaw.accountInfo.data
+    );
     const [escrow] = await findEscrowAddress(saveData.locker, userAuthority);
     const escrowRaw = await this.provider.getAccountInfo(escrow);
     if (!escrowRaw) {
@@ -239,6 +246,7 @@ export class SAVEWrapper {
         saveData,
         escrowData,
         userAuthority,
+        whitelistEnabled: lockerData.params.whitelistEnabled,
       });
     }
   }
@@ -410,6 +418,7 @@ export class SAVEWrapper {
       yiMint,
       underlyingMint,
     },
+    whitelistEnabled = false,
     escrowData: { tokens: escrowTokens },
     userAuthority = this.provider.wallet.publicKey,
   }: {
@@ -422,6 +431,10 @@ export class SAVEWrapper {
       SAVEData,
       "yiTokens" | "locker" | "yi" | "yiMint" | "underlyingMint"
     >;
+    /**
+     * If the whitelist is enabled on the locker, this should be set to `true`.
+     */
+    whitelistEnabled?: boolean;
     escrowData: Pick<EscrowData, "tokens">;
     /**
      * User.
@@ -439,40 +452,54 @@ export class SAVEWrapper {
       mint: underlyingMint,
       owner: userAuthority,
     });
-    return this.provider.newTX([
-      userUnderlyingATA.instruction,
-      SAVE_CODERS.SAVE.encodeIX(
-        "lock",
-        {
-          amount: amount.toU64(),
-          duration: new u64(duration),
+    const lockIX = SAVE_CODERS.SAVE.encodeIX(
+      "lock",
+      {
+        amount: amount.toU64(),
+        duration: new u64(duration),
+      },
+      {
+        save,
+        saveMint: amount.token.mintAccount,
+        saveYiTokens,
+        userSaveTokens: userSAVEATA,
+        userUnderlyingTokens: userUnderlyingATA.address,
+        lock: {
+          locker,
+          escrow,
+          escrowTokens,
         },
-        {
-          save,
-          saveMint: amount.token.mintAccount,
-          saveYiTokens,
-          userSaveTokens: userSAVEATA,
-          userUnderlyingTokens: userUnderlyingATA.address,
-          lock: {
-            locker,
-            escrow,
-            escrowTokens,
+        yi: {
+          yiToken,
+          yiMint,
+          yiUnderlyingTokens: await getATAAddress({
+            owner: yiToken,
+            mint: underlyingMint,
+          }),
+        },
+        userAuthority,
+        systemProgram: SystemProgram.programId,
+        yiTokenProgram: YI_ADDRESSES.Yi,
+        lockedVoterProgram: TRIBECA_ADDRESSES.LockedVoter,
+        tokenProgram: TOKEN_PROGRAM_ID,
+      }
+    );
+    if (whitelistEnabled) {
+      lockIX.keys.push(
+        ...[
+          {
+            pubkey: SAVE_ADDRESSES.SAVE,
+            isSigner: false,
+            isWritable: false,
           },
-          yi: {
-            yiToken,
-            yiMint,
-            yiUnderlyingTokens: await getATAAddress({
-              owner: yiToken,
-              mint: underlyingMint,
-            }),
+          {
+            pubkey: SystemProgram.programId,
+            isSigner: false,
+            isWritable: false,
           },
-          userAuthority,
-          systemProgram: SystemProgram.programId,
-          yiTokenProgram: YI_ADDRESSES.Yi,
-          lockedVoterProgram: TRIBECA_ADDRESSES.LockedVoter,
-          tokenProgram: TOKEN_PROGRAM_ID,
-        }
-      ),
-    ]);
+        ]
+      );
+    }
+    return this.provider.newTX([userUnderlyingATA.instruction, lockIX]);
   }
 }

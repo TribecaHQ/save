@@ -37,22 +37,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@crateprotocol/crate-sdk@npm:^0.4.1":
-  version: 0.4.1
-  resolution: "@crateprotocol/crate-sdk@npm:0.4.1"
-  dependencies:
-    tiny-invariant: ^1.2.0
-    tslib: ^2.3.1
-  peerDependencies:
-    "@project-serum/anchor": ">=0.19"
-    "@saberhq/anchor-contrib": ^1.11
-    "@saberhq/solana-contrib": ^1.11
-    "@saberhq/token-utils": ^1.11
-    "@solana/web3.js": ^1.29.2
-  checksum: 98318d91f00151d30a3bfd8812df8ce0fb25d242ab6904fcf861078e22b893e18be030565f03c8799c011de3a3388d18187c6a8d2066a5b9ee8760086c468e03
-  languageName: node
-  linkType: hard
-
 "@crateprotocol/yi@npm:^0.3.0":
   version: 0.3.0
   resolution: "@crateprotocol/yi@npm:0.3.0"
@@ -467,7 +451,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@tribecahq/save@workspace:."
   dependencies:
-    "@crateprotocol/crate-sdk": ^0.4.1
     "@crateprotocol/yi": ^0.3.0
     "@gokiprotocol/client": ^0.7.0
     "@project-serum/anchor": ^0.22.0
