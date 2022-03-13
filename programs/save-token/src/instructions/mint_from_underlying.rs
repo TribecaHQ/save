@@ -74,9 +74,9 @@ impl<'info> Validate<'info> for MintFromUnderlying<'info> {
         assert_keys_eq!(self.yi_mint, yi.mint);
         assert_keys_eq!(self.yi_underlying_tokens, yi.underlying_tokens);
 
-        assert_keys_eq!(self.source_authority, self.source_underlying_tokens.owner);
         assert_keys_eq!(yi.underlying_token_mint, self.source_underlying_tokens.mint);
         assert_keys_eq!(save.underlying_mint, self.source_underlying_tokens.mint);
+        assert_keys_eq!(self.source_authority, self.source_underlying_tokens.owner);
         Ok(())
     }
 }

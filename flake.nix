@@ -19,7 +19,8 @@
         ci = import ./ci.nix { inherit pkgs saber-pkgs; };
       in {
         packages.ci = ci;
-        devShell = pkgs.mkShell {
+        devShell = pkgs.stdenvNoCC.mkDerivation {
+          name = "devshell";
           buildInputs = with pkgs; [ ci rustup cargo-deps gh cargo-readme ];
         };
       });

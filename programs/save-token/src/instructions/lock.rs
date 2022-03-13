@@ -147,8 +147,28 @@ pub fn handler(ctx: Context<Lock>, amount: u64, duration: u64) -> Result<()> {
     Ok(())
 }
 
+impl<'info> Validate<'info> for LockedVoterLock<'info> {
+    fn validate(&self) -> Result<()> {
+        assert_keys_eq!(self.locker, self.escrow.locker);
+        assert_keys_eq!(self.escrow_tokens, self.escrow.tokens);
+        Ok(())
+    }
+}
+
+impl<'info> Validate<'info> for YiUnstake<'info> {
+    fn validate(&self) -> Result<()> {
+        let yi_token = self.yi_token.load()?;
+        assert_keys_eq!(yi_token.mint, self.yi_mint);
+        assert_keys_eq!(yi_token.underlying_tokens, self.yi_underlying_tokens);
+        Ok(())
+    }
+}
+
 impl<'info> Validate<'info> for Lock<'info> {
     fn validate(&self) -> Result<()> {
+        self.lock.validate()?;
+        self.yi.validate()?;
+
         let save = self.save.load()?;
         assert_keys_eq!(self.save_mint, save.mint);
         assert_keys_eq!(self.save_yi_tokens, save.yi_tokens);
@@ -160,12 +180,10 @@ impl<'info> Validate<'info> for Lock<'info> {
         assert_keys_eq!(self.user_underlying_tokens.mint, save.underlying_mint);
 
         assert_keys_eq!(self.lock.locker, save.locker, LockerMismatch);
+        assert_keys_eq!(self.lock.escrow.owner, self.user_authority);
 
-        let yi = self.yi.yi_token.load()?;
         assert_keys_eq!(self.yi.yi_token, save.yi);
         assert_keys_eq!(self.yi.yi_mint, save.yi_mint);
-        assert_keys_eq!(self.yi.yi_underlying_tokens, yi.underlying_tokens);
-
         Ok(())
     }
 }
