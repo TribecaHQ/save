@@ -683,9 +683,9 @@ dependencies = [
 
 [[package]]
 name = "locked-voter"
-version = "0.5.4"
+version = "0.5.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "60447cebc0c76adc1cb71adaa9bd63b0acc7a6a1b3ae75c8c3242683f28acfbd"
+checksum = "a1e8274a94cd0f83d18884c9f93adf100e0700363b28814cd6dee23693c723fc"
 dependencies = [
  "anchor-lang",
  "anchor-spl",
