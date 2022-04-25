@@ -26,4 +26,4 @@ anchor-spl = "^0.22"
 locked-voter = { version = "^0.5.1", features = ["cpi"] }
 num-traits = "0.2"
 vipers = "^2.0"
-yi = { version = "^0.3.0", features = ["cpi"] }
+yi = { version = "^0.4.0", features = ["cpi"] }
